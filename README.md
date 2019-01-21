@@ -1,5 +1,7 @@
 # Rangu
 
+[![Build Status](https://travis-ci.org/bugtender/rangu.svg?branch=master)](https://travis-ci.org/bugtender/rangu)
+
 Paranoid text spacing for good readability, to automatically insert whitespace between CJK (Chinese, Japanese, Korean) and half-width characters (alphabetical letters, numerical digits and symbols).
 
 This is the Ruby copy version from [Vinta](https://github.com/vinta)'s [pangu.py](https://github.com/vinta/pangu.py).
