@@ -51,7 +51,18 @@ module Rangu
     text
   end
 
-  def self.spacing(text)
-    spacing_text(text)
+  def self.spacing_file(path)
+    file = File.open(path, "r")
+    data = file.read
+    file.close
+    spacing_text(data)
+  end
+
+  def self.spacing(text_or_path)
+    if File.file?(File.absolute_path(text_or_path))
+      spacing_file(text_or_path)
+    else
+      spacing_text(text_or_path)
+    end
   end
 end

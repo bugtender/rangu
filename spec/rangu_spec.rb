@@ -13,6 +13,11 @@ RSpec.describe Rangu do
         to eq("V")
     end
 
+    it "can spacing with text file" do
+      expect(Rangu.spacing("./spec/test_file.txt")).
+        to eq("搭載 MP3 播放器，菊一文字 RX-7!\nJUST WE 就是 JUST WE，既不偉大也不卑微！")
+    end
+
     it "can spacing with text" do
       expect(Rangu.spacing("Mr.龍島主道：「Let's Party!各位高明博雅君子！」")).
         to eq("Mr. 龍島主道：「Let's Party! 各位高明博雅君子！」")
