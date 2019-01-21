@@ -1,8 +1,8 @@
 # Rangu
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rangu`. To experiment with that code, run `bin/console` for an interactive prompt.
+Paranoid text spacing for good readability, to automatically insert whitespace between CJK (Chinese, Japanese, Korean) and half-width characters (alphabetical letters, numerical digits and symbols).
 
-TODO: Delete this and the text above, and describe your gem
+This is the Ruby copy version from [Vinta](https://github.com/vinta)'s [pangu.py](https://github.com/vinta/pangu.py).
 
 ## Installation
 
@@ -22,7 +22,12 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+require "rangu"
+
+Rangu.spacing("當你凝視著bug，bug也凝視著你")
+=> "當你凝視著 bug，bug 也凝視著你"
+```
 
 ## Development
 
