@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.metadata = {
     "allowed_push_host" => "https://rubygems.org",
     "bug_tracker_uri" => "https://github.com/bugtender/rangu/issues",
-    "changelog_uri" => "https://github.com/bugtender/rangu/blob/master/CHANGELOG.md",
+    "changelog_uri" => "https://github.com/bugtender/rangu/blob/main/CHANGELOG.md",
     "rubygems_mfa_required" => "true",
     "source_code_uri" => "https://github.com/bugtender/rangu"
   }
