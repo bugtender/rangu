@@ -41,9 +41,6 @@ Metrics/ModuleLength:
 Minitest/MultipleAssertions:
   Enabled: false
 
-Gemspec/RequireMFA:
-  Enabled: false
-
 Style/Documentation:
   Enabled: false
 

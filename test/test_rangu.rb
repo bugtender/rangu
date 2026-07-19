@@ -388,7 +388,7 @@ class RanguTest < Minitest::Test
   end
 
   def test_has_a_version_number
-    refute_nil Rangu::VERSION
+    assert_equal "1.0.0", Rangu::VERSION
   end
 end
 
