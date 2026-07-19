@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rangu/version"
 
 module Rangu
@@ -52,10 +54,7 @@ module Rangu
   end
 
   def self.spacing_file(path)
-    file = File.open(path, "r")
-    data = file.read
-    file.close
-    spacing_text(data)
+    spacing_text(File.read(path))
   end
 
   def self.spacing(text_or_path)

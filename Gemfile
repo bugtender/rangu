@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in rangu.gemspec
 gemspec
 
-group :development, :test do
-  gem 'rubocop', '~> 0.56.0', require: false
-end
+gem "minitest", "~> 6.0"
+gem "rake", "~> 13.4"
+gem "rubocop", "~> 1.88.0", require: false
+gem "rubocop-minitest", "~> 0.39.1", require: false
