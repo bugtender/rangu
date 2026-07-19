@@ -23,6 +23,7 @@ Metrics/BlockLength:
 
 Metrics/AbcSize:
   Exclude:
+    - "lib/rangu.rb"
     - "test/**/*"
 
 Metrics/ClassLength:
@@ -30,6 +31,10 @@ Metrics/ClassLength:
     - "test/**/*"
 
 Metrics/MethodLength:
+  Exclude:
+    - "lib/rangu.rb"
+
+Metrics/ModuleLength:
   Exclude:
     - "lib/rangu.rb"
 
