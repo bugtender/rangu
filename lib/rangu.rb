@@ -25,43 +25,41 @@ module Rangu
   CJK_ANS           = /([\u2e80-\u2eff\u2f00-\u2fdf\u3040-\u309f\u30a0-\u30ff\u3100-\u312f\u3200-\u32ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff])([A-Za-zΑ-Ωα-ω0-9`\$%\^&\*\-=\+\\\|\/@\u00a1-\u00ff\u2022\u2027\u2150-\u218f])/i
   ANS_CJK           = /([A-Za-zΑ-Ωα-ω0-9`~\$%\^&\*\-=\+\\\|\/!;:,\.\?\u00a1-\u00ff\u2022\u2026\u2027\u2150-\u218f])([\u2e80-\u2eff\u2f00-\u2fdf\u3040-\u309f\u30a0-\u30ff\u3100-\u312f\u3200-\u32ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff])/i
 
-  def self.spacing_text(text)
-    text.gsub!(CJK_QUOTE, "\\1 \\2")
-    text.gsub!(QUOTE_CJK, "\\1 \\2")
+  def self.spacing(text)
+    new_text = text.dup
 
-    text.gsub!(FIX_QUOTE, "\\1\\3\\5")
-    text.gsub!(FIX_SINGLE_QUOTE, "\\1\\3\\4")
+    new_text.gsub!(CJK_QUOTE, "\\1 \\2")
+    new_text.gsub!(QUOTE_CJK, "\\1 \\2")
 
-    text.gsub!(CJK_HASH, "\\1 \\2")
-    text.gsub!(HASH_CJK, "\\1 \\3")
+    new_text.gsub!(FIX_QUOTE, "\\1\\3\\5")
+    new_text.gsub!(FIX_SINGLE_QUOTE, "\\1\\3\\4")
 
-    text.gsub!(CJK_OPERATOR_ANS, "\\1 \\2 \\3")
-    text.gsub!(ANS_OPERATOR_CJK, "\\1 \\2 \\3")
+    new_text.gsub!(CJK_HASH, "\\1 \\2")
+    new_text.gsub!(HASH_CJK, "\\1 \\3")
 
-    old_text = text
-    text.gsub!(CJK_BRACKET_CJK, "\\1 \\2 \\4")
-    if old_text == text
-      text.gsub!(CJK_BRACKET, "\\1 \\2")
-      text.gsub!(BRACKET_CJK, "\\1 \\2")
+    new_text.gsub!(CJK_OPERATOR_ANS, "\\1 \\2 \\3")
+    new_text.gsub!(ANS_OPERATOR_CJK, "\\1 \\2 \\3")
+
+    old_text = new_text
+    new_text.gsub!(CJK_BRACKET_CJK, "\\1 \\2 \\4")
+    if old_text == new_text
+      new_text.gsub!(CJK_BRACKET, "\\1 \\2")
+      new_text.gsub!(BRACKET_CJK, "\\1 \\2")
     end
-    text.gsub!(FIX_BRACKET, "\\1\\3\\5")
+    new_text.gsub!(FIX_BRACKET, "\\1\\3\\5")
 
-    text.gsub!(FIX_SYMBOL, "\\1\\2 \\3")
+    new_text.gsub!(FIX_SYMBOL, "\\1\\2 \\3")
 
-    text.gsub!(CJK_ANS, "\\1 \\2")
-    text.gsub!(ANS_CJK, "\\1 \\2")
-    text
+    new_text.gsub!(CJK_ANS, "\\1 \\2")
+    new_text.gsub!(ANS_CJK, "\\1 \\2")
+    new_text
+  end
+
+  class << self
+    alias spacing_text spacing
   end
 
   def self.spacing_file(path)
-    spacing_text(File.read(path))
-  end
-
-  def self.spacing(text_or_path)
-    if File.file?(File.absolute_path(text_or_path))
-      spacing_file(text_or_path)
-    else
-      spacing_text(text_or_path)
-    end
+    spacing(File.read(path, encoding: Encoding::UTF_8))
   end
 end

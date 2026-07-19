@@ -42,10 +42,6 @@ Gemspec/RequireMFA:
 Style/Documentation:
   Enabled: false
 
-Style/FrozenStringLiteralComment:
-  Exclude:
-    - "test/test_rangu.rb"
-
 Style/RedundantRegexpEscape:
   Exclude:
     - "lib/rangu.rb"

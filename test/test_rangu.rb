@@ -1,6 +1,56 @@
+# frozen_string_literal: true
+
 require "test_helper"
 
 class RanguTest < Minitest::Test
+  def test_spacing_does_not_modify_its_input
+    input = "中文ABC"
+
+    result = Rangu.spacing(input)
+
+    assert_equal "中文 ABC", result
+    assert_equal "中文ABC", input
+    refute_same input, result
+  end
+
+  def test_spacing_accepts_frozen_input
+    input = "中文ABC"
+
+    assert_predicate input, :frozen?
+    assert_equal "中文 ABC", Rangu.spacing(input)
+  end
+
+  def test_spacing_returns_a_new_string_when_no_spacing_is_needed
+    input = "plain text"
+
+    result = Rangu.spacing(input)
+
+    assert_equal input, result
+    refute_same input, result
+  end
+
+  def test_spacing_text_is_an_alias_for_spacing
+    input = "中文ABC"
+
+    result = Rangu.spacing_text(input)
+
+    assert_equal Rangu.spacing(input), result
+    assert_equal "中文ABC", input
+    refute_same input, result
+  end
+
+  def test_spacing_treats_an_existing_path_as_text
+    Tempfile.create("rangu") do |file|
+      file.write("中文ABC")
+      file.close
+
+      result = Rangu.spacing(file.path)
+
+      assert_equal file.path, result
+      refute_same file.path, result
+    end
+  end
+
   def test_should_return_nice_spacing_text
     assert_equal "新八的構造成分有 95% 是眼鏡、3% 是水、2% 是垃圾", Rangu.spacing(+"新八的構造成分有95%是眼鏡、3%是水、2%是垃圾")
     assert_equal "所以, 請問 Jackey 的鼻子有幾個? 3.14 個!", Rangu.spacing(+"所以,請問Jackey的鼻子有幾個?3.14個!")
@@ -11,11 +61,19 @@ class RanguTest < Minitest::Test
 
   def test_can_spacing_with_text_file
     Tempfile.create("rangu") do |file|
-      file.write("搭載MP3播放器，菊一文字RX-7!\nJUST WE就是JUST WE，既不偉大也不卑微！")
+      contents = "搭載MP3播放器，菊一文字RX-7!\nJUST WE就是JUST WE，既不偉大也不卑微！"
+      file.write(contents)
       file.close
 
-      assert_equal "搭載 MP3 播放器，菊一文字 RX-7!\nJUST WE 就是 JUST WE，既不偉大也不卑微！", Rangu.spacing(file.path)
+      result = Rangu.spacing_file(file.path)
+
+      assert_equal "搭載 MP3 播放器，菊一文字 RX-7!\nJUST WE 就是 JUST WE，既不偉大也不卑微！", result
+      assert_equal contents, File.read(file.path, encoding: Encoding::UTF_8)
     end
+  end
+
+  def test_spacing_file_propagates_file_errors
+    assert_raises(Errno::ENOENT) { Rangu.spacing_file("missing-rangu-file.txt") }
   end
 
   def test_can_spacing_with_text
